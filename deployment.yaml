@@ -18,16 +18,17 @@ spec:
         - name: hello-world-app
           image: kennyd3d/hello-world-app:latest
           ports:
-            - containerPort: 80  # Change this to the port your app listens on
+            - containerPort: 80
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: hello-world-app-service
 spec:
-  type: ClusterIP  # Change to LoadBalancer or NodePort if you want to expose it externally
+  type: NodePort  # Change made here
   ports:
-    - port: 80  # Change to the port exposed by your app
-      targetPort: 80  # Port in the container to forward traffic to
+    - port: 80
+      targetPort: 80
+      nodePort: 30080
   selector:
     app: hello-world-app
