@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-world-app
+  labels:
+    app: hello-world-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hello-world-app
+  template:
+    metadata:
+      labels:
+        app: hello-world-app
+    spec:
+      containers:
+        - name: hello-world-app
+          image: kennyd3d/hello-world-app:latest
+          ports:
+            - containerPort: 80  # Change this to the port your app listens on
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hello-world-app-service
+spec:
+  type: ClusterIP  # Change to LoadBalancer or NodePort if you want to expose it externally
+  ports:
+    - port: 80  # Change to the port exposed by your app
+      targetPort: 80  # Port in the container to forward traffic to
+  selector:
+    app: hello-world-app
