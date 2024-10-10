@@ -1,0 +1,8 @@
+namespace: dev
+environments:
+  dev:
+    namespace: dev
+  qa:
+    namespace: qa
+  stable:
+    namespace: stable
