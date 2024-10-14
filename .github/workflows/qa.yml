@@ -10,8 +10,6 @@ env:
 jobs:
   retag_push_qa:
     runs-on: ubuntu-latest
-    outputs:
-      sha_short: ${{ steps.prepare.outputs.sha_short }}
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
@@ -29,8 +27,7 @@ jobs:
         run: |
           SHA_SHORT=$(echo $GITHUB_SHA | cut -c1-7)
           echo "SHA_SHORT=$SHA_SHORT" >> $GITHUB_ENV
-          echo "::set-output name=sha_short::$SHA_SHORT"
-
+          
       - name: Retag and push Docker Image with Release Name
         run: |
           docker pull kennyd3d/${{ env.ARTIFACT_NAME }}:$SHA_SHORT
@@ -43,6 +40,6 @@ jobs:
     uses: ./.github/workflows/deploy.yml
     with:
       namespace: "qa"
-      image: "kennyd3d/hello-world-app:${{ needs.retag_push_qa.outputs.sha_short }}"
+      image: "kennyd3d/hello-world-app:${{ github.event.release.tag_name }}"
     secrets:
       GH_TOKEN: ${{ secrets.GH_TOKEN }}
