@@ -11,7 +11,6 @@ permissions:
 
 jobs:
   build:
-    if: ${{ github.actor != 'github-actions[bot]' }} # Prevent bot-triggered commits
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -41,25 +40,34 @@ jobs:
         run: |
           pip install -r requirements.txt
 
-      - name: Update image tag in values.yaml
-        run: |
-          yq e -i '.environments.dev.image = "kennyd3d/hello-world-app:${{ env.SHA_SHORT }}"' ./CICD/hello-world-app/values.yaml
-
       - name: Build and Push Docker image
         uses: docker/build-push-action@v3
         with:
           context: .
           push: true
-          tags: kennyd3d/hello-world-app:${{ env.SHA_SHORT }}
+          tags: |
+            kennyd3d/hello-world-app:${{ env.SHA_SHORT }}
+            kennyd3d/hello-world-app:dev
+
+      - name: Checkout code from another repository
+        uses: actions/checkout@v4
+        with:
+          repository: kennyd3d/argo-deployments
+          token: ${{ secrets.GH_TOKEN }} # PAT for private repos
+
+      - name: Update image tag in values-dev.yaml
+        run: |
+          yq e -i '.environments.dev.image = "kennyd3d/hello-world-app:${{ env.SHA_SHORT }}"' ./hello-world-app/values-dev.yaml
 
       - name: Commit files
         run: |
-          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          git add ./CICD/hello-world-app/values.yaml
+          git add .
           git commit -m "[BOT] Update k8 deployment"
 
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
           branch: main
+          github_token: ${{ secrets.GH_TOKEN }}
