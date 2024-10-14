@@ -50,7 +50,8 @@ jobs:
             kennyd3d/hello-world-app:${{ steps.prepare.outputs.sha_short }}
             kennyd3d/hello-world-app:dev
 
-  deploy:
+  Deploy:
+    name: Deploy 🚀
     needs: build
     uses: ./.github/workflows/deploy.yml
     with:

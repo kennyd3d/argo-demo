@@ -18,9 +18,7 @@ on:
 
 jobs:
   argo-deploy:
-    name: Deploy 🚀
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code from another repository
         uses: actions/checkout@v4
