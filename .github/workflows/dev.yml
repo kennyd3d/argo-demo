@@ -74,7 +74,7 @@ jobs:
         run: |
           sudo wget https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 -O /usr/bin/yq &&\
           sudo chmod +x /usr/bin/yq
-          yq e -i '.environments.dev.image = "kennyd3d/hello-world-app:${{ needs.build.outputs.sha_short }}"' ./argo-deployments/hello-world-app/values-dev.yaml
+          yq e -i '.environments.dev.image = "kennyd3d/hello-world-app:${{ needs.build.outputs.sha_short }}"' ./hello-world-app/values-dev.yaml
 
       - name: Commit files
         working-directory: ./argo-deployments
