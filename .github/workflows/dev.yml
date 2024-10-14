@@ -50,46 +50,11 @@ jobs:
             kennyd3d/hello-world-app:${{ steps.prepare.outputs.sha_short }}
             kennyd3d/hello-world-app:dev
 
-  argo-deploy:
-    name: Deploy 🚀
-    runs-on: ubuntu-latest
+  deploy:
     needs: build
-    steps:
-      - name: Checkout code from another repository
-        uses: actions/checkout@v4
-        with:
-          repository: kennyd3d/argo-deployments
-          path: ./argo-deployments
-          token: ${{ secrets.GH_TOKEN }} # PAT for private repos
-
-      - name: Force update local branch with remote
-        working-directory: ./argo-deployments
-        run: |
-          git fetch origin main
-          git reset --hard origin/main
-          git clean -fd
-
-      - name: Update image tag in values-dev.yaml
-        working-directory: ./argo-deployments
-        run: |
-          sudo wget https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 -O /usr/bin/yq &&\
-          sudo chmod +x /usr/bin/yq
-          yq e -i '.environments.dev.image = "kennyd3d/hello-world-app:${{ needs.build.outputs.sha_short }}"' ./hello-world-app/values-dev.yaml
-
-      - name: Commit files
-        working-directory: ./argo-deployments
-        run: |
-          git config --local user.email "github-actions[bot]@users.noreply.github.com"
-          git config --local user.name "github-actions[bot]"
-          git add .
-          git commit -m "[BOT] Update k8 deployment" || echo "No changes to commit"
-
-      - name: Pull the latest changes from main
-        working-directory: ./argo-deployments
-        run: |
-          git pull origin main --rebase
-
-      - name: Push changes
-        working-directory: ./argo-deployments
-        run: |
-          git push origin main --force-with-lease
+    uses: kennyd3d/argo-demo/.github/workflows/deploy.yml
+    with:
+      namespace: "dev"
+      image: "kennyd3d/hello-world-app:${{ needs.build.outputs.sha_short }}"
+    secrets:
+      GH_TOKEN: ${{ secrets.GH_TOKEN }}
