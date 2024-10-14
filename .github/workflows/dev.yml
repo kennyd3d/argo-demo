@@ -53,6 +53,7 @@ jobs:
   argo-deploy:
     name: Deploy 🚀
     runs-on: ubuntu-latest
+    if: always() # Ensures the job always runs regardless of build job success/failure
     steps:
       - name: Checkout code from another repository
         uses: actions/checkout@v4
@@ -78,6 +79,10 @@ jobs:
           git config --local user.name "github-actions[bot]"
           git add .
           git commit -m "[BOT] Update k8 deployment" || echo "No changes to commit"
+
+      - name: Pull the latest changes from main
+        run: |
+          git pull origin main --rebase
 
       - name: Push changes
         uses: ad-m/github-push-action@master
