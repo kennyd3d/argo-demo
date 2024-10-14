@@ -1,4 +1,4 @@
-name: Build and Deploy to Docker Hub
+name: Build and Deploy 🚀
 
 on:
   push:
@@ -53,7 +53,7 @@ jobs:
   argo-deploy:
     name: Deploy 🚀
     runs-on: ubuntu-latest
-    if: always() # Ensures the job always runs regardless of build job success/failure
+    needs: build
     steps:
       - name: Checkout code from another repository
         uses: actions/checkout@v4
