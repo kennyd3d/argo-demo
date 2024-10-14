@@ -2,7 +2,10 @@ namespace: dev
 environments:
   dev:
     namespace: dev
+    image-tag: 
   qa:
     namespace: qa
+    image-tag: 
   stable:
     namespace: stable
+    image-tag: 
