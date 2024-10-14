@@ -50,11 +50,11 @@ jobs:
             kennyd3d/hello-world-app:${{ steps.prepare.outputs.sha_short }}
             kennyd3d/hello-world-app:dev
 
-  deploy:
-    needs: build
-    uses: kennyd3d/argo-demo/.github/workflows/deploy.yml
-    with:
-      namespace: "dev"
-      image: "kennyd3d/hello-world-app:${{ needs.build.outputs.sha_short }}"
-    secrets:
-      GH_TOKEN: ${{ secrets.GH_TOKEN }}
+  # deploy:
+  #   needs: build
+  #   uses: kennyd3d/argo-demo/.github/workflows/deploy.yml
+  #   with:
+  #     namespace: "dev"
+  #     image: "kennyd3d/hello-world-app:${{ needs.build.outputs.sha_short }}"
+  #   secrets:
+  #     GH_TOKEN: ${{ secrets.GH_TOKEN }}
