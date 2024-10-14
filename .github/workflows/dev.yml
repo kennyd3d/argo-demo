@@ -16,9 +16,6 @@ jobs:
 
       - name: Preparing job
         run: |
-          sudo apt-get update
-          sudo apt-get install -y yq
-
           SHA_SHORT=$(echo $GITHUB_SHA | cut -c1-7)
           echo "SHA_SHORT=$SHA_SHORT" >> $GITHUB_ENV
           echo "Short SHA: $SHA_SHORT"
@@ -36,6 +33,7 @@ jobs:
 
       - name: Install dependencies
         run: |
+          pip install yq
           pip install -r requirements.txt
 
       - name: Update image tag in values.yaml
