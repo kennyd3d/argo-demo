@@ -64,6 +64,7 @@ jobs:
 
       - name: Force update local branch with remote
         run: |
+          cd argo-deployments
           git fetch origin main
           git reset --hard origin/main  # Resets to ensure you are in sync with the remote branch
           git clean -fd  # Removes any untracked files
