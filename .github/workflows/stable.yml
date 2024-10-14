@@ -1,0 +1,22 @@
+name: Deploy Stable
+
+on:
+  workflow_dispatch:
+    inputs:
+      RELEASE:
+        required: true
+        type: string
+        description: "The name of the release tag you want to deploy to stable."
+
+env:
+  ARTIFACT_NAME: hello-world-app
+
+jobs:
+  Deploy:
+    name: Deploy 🚀
+    uses: ./.github/workflows/deploy.yml
+    with:
+      namespace: "stable"
+      image: "kennyd3d/hello-world-app:${{ github.event.inputs.RELEASE }}"
+    secrets:
+      GH_TOKEN: ${{ secrets.GH_TOKEN }}
