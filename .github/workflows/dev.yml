@@ -52,7 +52,7 @@ jobs:
 
   deploy:
     needs: build
-    uses: kennyd3d/argo-demo/.github/workflows/deploy.yml
+    uses: ./.github/workflows/deploy.yml
     with:
       namespace: "dev"
       image: "kennyd3d/hello-world-app:${{ needs.build.outputs.sha_short }}"
