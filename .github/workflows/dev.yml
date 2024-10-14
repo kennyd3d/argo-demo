@@ -45,7 +45,7 @@ jobs:
         env:
           IMAGE_TAG: ${{ env.SHA_SHORT }}
         run: |
-          yq e -i '.environments.dev.image-tag = "${{ env.IMAGE_TAG }}"' ./CICD/hello-world-app/values.yaml
+          yq e -i '.environments.dev.image = "kennyd3d/hello-world-app:${{ env.IMAGE_TAG }}"' ./CICD/hello-world-app/values.yaml
 
       - name: Build and Push Docker image
         uses: docker/build-push-action@v3
@@ -64,5 +64,4 @@ jobs:
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
-          github_token: ${{ secrets.GH_TOKEN }}
           branch: main

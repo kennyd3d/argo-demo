@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: hello-world-app
-          image: kennyd3d/hello-world-app:latest
+          image: {{ .Values.image }}
           ports:
             - containerPort: 5000
 ---

@@ -2,10 +2,10 @@ namespace: dev
 environments:
   dev:
     namespace: dev
-    image-tag:
+    image: kennyd3d/hello-world-app:dev
   qa:
     namespace: qa
-    image-tag:
+    image: kennyd3d/hello-world-app:dev
   stable:
     namespace: stable
-    image-tag:
+    image: kennyd3d/hello-world-app:dev
