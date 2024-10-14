@@ -63,19 +63,21 @@ jobs:
           token: ${{ secrets.GH_TOKEN }} # PAT for private repos
 
       - name: Force update local branch with remote
+        working-directory: ./argo-deployments
         run: |
-          cd argo-deployments
           git fetch origin main
           git reset --hard origin/main  # Resets to ensure you are in sync with the remote branch
           git clean -fd  # Removes any untracked files
 
       - name: Update image tag in values-dev.yaml
+        working-directory: ./argo-deployments
         run: |
           sudo wget https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 -O /usr/bin/yq &&\
           sudo chmod +x /usr/bin/yq
           yq e -i '.environments.dev.image = "kennyd3d/hello-world-app:${{ needs.build.outputs.sha_short }}"' ./argo-deployments/hello-world-app/values-dev.yaml
 
       - name: Commit files
+        working-directory: ./argo-deployments
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
@@ -83,6 +85,7 @@ jobs:
           git commit -m "[BOT] Update k8 deployment" || echo "No changes to commit"
 
       - name: Pull the latest changes from main
+        working-directory: ./argo-deployments
         run: |
           git pull origin main --rebase
 
@@ -91,3 +94,5 @@ jobs:
         with:
           branch: main
           github_token: ${{ secrets.GH_TOKEN }}
+          directory: ./argo-deployments
+          
