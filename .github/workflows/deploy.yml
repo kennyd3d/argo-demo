@@ -49,12 +49,8 @@ jobs:
           git add .
           git commit -m "[BOT] Update k8 deployment" || echo "No changes to commit"
 
-      - name: Pull the latest changes from main
+      - name: Pull latest, push changes
         working-directory: ./argo-deployments
         run: |
-          git pull origin main --rebase
-
-      - name: Push changes
-        working-directory: ./argo-deployments
-        run: |
-          git push origin main --force-with-lease
+          git pull origin main
+          git push origin main
