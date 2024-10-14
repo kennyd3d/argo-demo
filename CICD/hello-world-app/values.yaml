@@ -2,7 +2,7 @@ namespace: dev
 environments:
   dev:
     namespace: dev
-    image: kennyd3d/hello-world-app:dev
+    image: kennyd3d/hello-world-app:6e4ec18
   qa:
     namespace: qa
     image: kennyd3d/hello-world-app:dev
