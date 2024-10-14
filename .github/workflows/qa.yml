@@ -9,7 +9,7 @@ env:
 
 jobs:
   retag_push_qa:
-    runs-on: d3d-org-runner-set
+    runs-on: ubuntu-latest
     outputs:
       sha_short: ${{ steps.prepare.outputs.sha_short }}
     steps:
