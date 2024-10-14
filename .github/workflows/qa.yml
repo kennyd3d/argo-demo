@@ -28,7 +28,7 @@ jobs:
         id: prepare
         run: |
           SHA_SHORT=$(echo $GITHUB_SHA | cut -c1-7)
-          echo "SHA_SHORT=$SHA_SHORT"
+          echo "SHA_SHORT=$SHA_SHORT" >> $GITHUB_ENV
           echo "::set-output name=sha_short::$SHA_SHORT"
 
       - name: Retag and push Docker Image with Release Name
