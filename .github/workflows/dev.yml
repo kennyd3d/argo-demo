@@ -40,8 +40,8 @@ jobs:
         env:
           IMAGE_TAG: ${{ env.SHA_SHORT }}
         run: |
-          yq -i '
-            .environments.dev["image-tag"] = strenv(IMAGE_TAG)
+          yq eval -i '
+            .environments.dev["image-tag"] = env(IMAGE_TAG)
           ' ./CICD/hello-world-app/values.yaml
 
       - name: Build and Push Docker image
