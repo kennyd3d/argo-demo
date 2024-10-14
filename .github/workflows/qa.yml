@@ -8,7 +8,6 @@ env:
   ARTIFACT_NAME: hello-world-app
 
 jobs:
-  # Build test and deploy to qa when a release tag is created
   retag_push_qa:
     runs-on: d3d-org-runner-set
     outputs:
