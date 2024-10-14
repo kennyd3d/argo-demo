@@ -6,7 +6,6 @@ on:
 
 env:
   ARTIFACT_NAME: hello-world-app
-  DEPLOYMENT_FILE_PATH: "./CICD/mes-k8s_qa.yaml"
 
 jobs:
   # Build test and deploy to qa when a release tag is created
