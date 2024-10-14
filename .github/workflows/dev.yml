@@ -11,7 +11,7 @@ permissions:
 
 jobs:
   build:
-    name: Build 🛠️
+    name: Build & Push 🛠️
     runs-on: ubuntu-latest
     outputs:
       sha_short: ${{ steps.prepare.outputs.sha_short }}
@@ -59,6 +59,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: kennyd3d/argo-deployments
+          path: ./argo-deployments
           token: ${{ secrets.GH_TOKEN }} # PAT for private repos
 
       - name: Force update local branch with remote
